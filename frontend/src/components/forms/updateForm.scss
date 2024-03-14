@@ -1,0 +1,13 @@
+@use "../../scss/" as *;
+
+
+.updateForm{
+    max-width: 1660px;
+    margin: 3rem;
+    padding: 4rem;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+}
