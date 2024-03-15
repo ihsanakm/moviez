@@ -27,8 +27,9 @@ connectToDb();
 app.post("/signup", userRoute.signup);
 app.post("/login", userRoute.login);
 app.get("/logout", userRoute.logout);
-app.get("/check-auth", requireAuth, userRoute.checkAuth);
 
+
+app.get("/check-auth", requireAuth, userRoute.checkAuth);
 
 
 app.get("/my-movie",requireAuth,movieRoute.getMovies);

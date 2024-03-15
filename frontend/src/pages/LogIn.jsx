@@ -14,9 +14,13 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { useAuth } from '../authContext/authContext';
 
 function LogIn() {
+  const { isLoggedIn, login, logout } = useAuth();
+
   const navigate = useNavigate();
+
 
   const [logIn, setLogIn] = useState({
     email: "",
@@ -36,7 +40,8 @@ function LogIn() {
     event.preventDefault();
     const res = await axios.post("http://localhost:3000/login",logIn, { withCredentials: true });
     console.log(res);
-      navigate('/');
+    login
+    navigate('/');
   };
 
   const defaultTheme = createTheme();
@@ -114,7 +119,7 @@ function LogIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

@@ -18,9 +18,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
-        
-        <Route path="/movie/search/:keyword" element={<Catalog />} />
         <Route path="/" element={<Home />} />
+
+      
+        <Route path="/movie/search/:keyword" element={<Catalog />} />
         <Route path="/movie/:id" element={<Detail />} />
         <Route path="/my-movie" element={<MyMovie />} />
       </Routes>
