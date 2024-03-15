@@ -46,7 +46,7 @@ const Header = () => {
 
   const handleSignOut = async ( ) => {
     await axios.get('http://localhost:3000/logout',{ withCredentials: true })
-    logout
+    logout()
   }
 
   const handleSignIn = async ( ) => {

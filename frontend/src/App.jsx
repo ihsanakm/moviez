@@ -9,6 +9,8 @@ import Header from "./components/header/Header";
 import MyMovie from "./pages/MyMovie";
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp";
+import AuthorizeUser from "./authContext/authorizeUser";
+
 
 
 function App() {
@@ -22,8 +24,8 @@ function App() {
 
       
         <Route path="/movie/search/:keyword" element={<Catalog />} />
-        <Route path="/movie/:id" element={<Detail />} />
-        <Route path="/my-movie" element={<MyMovie />} />
+        <Route path="/movie/:id" element={<AuthorizeUser><Detail /></AuthorizeUser>} />
+        <Route path="/my-movie" element={<AuthorizeUser><MyMovie /></AuthorizeUser>} />
       </Routes>
     </BrowserRouter>
   );

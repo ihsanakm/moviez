@@ -40,7 +40,7 @@ function LogIn() {
     event.preventDefault();
     const res = await axios.post("http://localhost:3000/login",logIn, { withCredentials: true });
     console.log(res);
-    login
+    login()
     navigate('/');
   };
 
