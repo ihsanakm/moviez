@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Copyright(props) {
@@ -28,13 +28,10 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const [signUp, setSignUp] = useState({
     email: "",
@@ -51,13 +48,12 @@ export default function SignUp() {
     });
   }
 
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post("http://localhost:3000/signup", signUp, { withCredentials: true });
       console.log(res);
-      navigate('/login')
+      navigate('/login'); // Redirect to home page after successful sign-up
 
     } catch (error) {
       console.error("Error during sign:", error);
@@ -92,7 +88,6 @@ export default function SignUp() {
                   label="First Name"
                   autoFocus
                   onChange={handleSign}
-
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -104,7 +99,6 @@ export default function SignUp() {
                   name="lastName"
                   autoComplete="family-name"
                   onChange={handleSign}
-
                 />
               </Grid>
               <Grid item xs={12}>
@@ -116,7 +110,6 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   onChange={handleSign}
-
                 />
               </Grid>
               <Grid item xs={12}>
@@ -129,10 +122,8 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   onChange={handleSign}
-
                 />
               </Grid>
-              
             </Grid>
             <Button
               type="submit"
@@ -144,7 +135,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

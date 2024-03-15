@@ -31,7 +31,7 @@ app.get("/check-auth", requireAuth, userRoute.checkAuth);
 
 
 
-app.get("/my-movie", requireAuth,movieRoute.getMovies);
+app.get("/my-movie",requireAuth,movieRoute.getMovies);
 
 app.post("/movie/add",requireAuth, movieRoute.createMovie);
 

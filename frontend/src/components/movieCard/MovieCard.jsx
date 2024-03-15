@@ -34,7 +34,7 @@ const MovieCard = ({handleDelete,item,movie,selectedMovie}) => {
         backdropPath: Movie.backdrop_path,
         posterPath: Movie.poster_path,
         genres: Movie.genres.map((genre) => genre.name),
-      });
+      },{ withCredentials: true });
 
       console.log("Added to watchlist:", response.data);
     } catch (error) {

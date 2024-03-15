@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,33 +13,33 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        Moviez
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+function LogIn() {
+  const navigate = useNavigate();
 
-// TODO remove, this demo shouldn't need to reset the theme.
+  const [logIn, setLogIn] = useState({
+    email: "",
+    password: "",
+  });
 
-const defaultTheme = createTheme();
-
-export default function LogIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  function handleLogIn(e) {
+    const { name, value } = e.target;
+    setLogIn({
+      ...logIn,
+      [name]: value,
     });
+  }
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const res = await axios.post("http://localhost:3000/login",logIn, { withCredentials: true });
+    console.log(res);
+      navigate('/');
   };
+
+  const defaultTheme = createTheme();
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -56,7 +57,8 @@ export default function LogIn() {
               theme.palette.mode === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-          }}        />
+          }}        
+        />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square >
           <Box
             sx={{
@@ -81,6 +83,8 @@ export default function LogIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={handleLogIn}
+
               />
               <TextField
                 margin="normal"
@@ -91,6 +95,8 @@ export default function LogIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleLogIn}
+
               />
              
               <Button
@@ -113,7 +119,6 @@ export default function LogIn() {
                   </Link>
                 </Grid>
               </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>
@@ -121,3 +126,5 @@ export default function LogIn() {
     </ThemeProvider>
   );
 }
+
+export default LogIn;

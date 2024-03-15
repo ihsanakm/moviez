@@ -11,7 +11,7 @@ import apiConfig from '../../api/apiConfig';
 import './updateForm.scss'
 import { Chip, FormControl, Input, InputLabel } from '@mui/material';
 
-const UpdateForm = ({ selectedSingleMovie,setIsUpdateForm }) => {
+const UpdateForm = ({ selectedSingleMovie,setIsUpdateForm,updateMovieData  }) => {
     const [genress, setGenress] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
   
@@ -48,7 +48,8 @@ const UpdateForm = ({ selectedSingleMovie,setIsUpdateForm }) => {
       }),
       onSubmit: async (values) => {
         try {
-          const response = await axios.put(`http://localhost:3000/my-movie/update/${values.id}`, values);
+          const response = await axios.put(`http://localhost:3000/my-movie/update/${values.id}`, values,{ withCredentials: true });
+          updateMovieData(response.data.updatedMovie);
           setIsUpdateForm(false)        
         } catch (error) {
           console.error('Error submitting movie:', error);

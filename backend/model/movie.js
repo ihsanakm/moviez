@@ -8,7 +8,9 @@ const movieSchema = new mongoose.Schema({
   posterPath:{ type: String, required: true, default:"/xi2pblvQtCnh26SeOYzx1YX3DLT.jpg" },
   genres: {
     type: [{ type: String, required: true }]},
-  date:{type:Date}
+  date:{type:Date},    
+  user:{type:mongoose.Schema.Types.ObjectId, ref:"User"}
+
 });
 
 const Movie = mongoose.model('Movie', movieSchema);

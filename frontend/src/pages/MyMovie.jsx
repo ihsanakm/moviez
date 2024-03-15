@@ -9,14 +9,13 @@ import AddForm from "../components/forms/addForm";
 
 const MyMovie = () => {
   const [allMovies, setAllMovies] = useState([]);
-  const [selectedSingleMovie, setselectedSingleMovie] = useState("");
+  const [selectedSingleMovie, setSelectedSingleMovie] = useState(null); // Changed setselectedSingleMovie to setSelectedSingleMovie
   const [isUpdateForm, setIsUpdateForm] = useState(false);
   const [isAddForm, setIsAddForm] = useState(false);
 
-
   const fetchMovies = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/my-movie");
+      const response = await axios.get("http://localhost:3000/my-movie", { withCredentials: true });
       setAllMovies(response.data.movies);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -26,9 +25,10 @@ const MyMovie = () => {
   const selectedMovie = async (id) => {
     try {
       const selectedMovie = await axios.get(
-        `http://localhost:3000/my-movie/read/${id}`
+        `http://localhost:3000/my-movie/read/${id}`,
+        { withCredentials: true }
       );
-      setselectedSingleMovie(selectedMovie.data.movie);
+      setSelectedSingleMovie(selectedMovie.data.movie); // Changed setselectedSingleMovie to setSelectedSingleMovie
       setIsUpdateForm(true);
     } catch (error) {
       console.error("Error fetching movies:", error);
@@ -37,32 +37,21 @@ const MyMovie = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/my-movie/delete/${id}`);
+      await axios.delete(`http://localhost:3000/my-movie/delete/${id}`, { withCredentials: true });
       fetchMovies();
     } catch (error) {
       console.error("Error deleting movie:", error);
     }
   };
 
-  const handleModalClose = (modal) => {
-    setSelectedMovie("");
-    setIsModalOpen(modal);
+  const handleUpdateMovieData = async (updatedMovie) => {
+    await fetchMovies();
+    setAllMovies(allMovies.map(movie => movie.id === updatedMovie.id ? updatedMovie : movie));
   };
 
-  const handleUpdate = async (id, updatedMovie) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/my-movie/update/${id}`,
-        updatedMovie
-      );
-      console.log("Update response:", response.data);
-      // If the update is successful, close the modal and fetch the updated movie list
-      handleModalClose();
-      fetchMovies();
-    } catch (error) {
-      console.error("Error updating movie:", error);
-    }
-  };
+  const handleAddMovieData = async() =>{
+    await fetchMovies();
+  }
 
   useEffect(() => {
     fetchMovies();
@@ -71,7 +60,7 @@ const MyMovie = () => {
   return (
     <>
       <div className="movie-grid">
-        <button style={{ borderRadius: "30px", height: "350px" }} onClick={()=>setIsAddForm(true)}>
+        <button style={{ borderRadius: "30px", height: "350px" }} onClick={() => setIsAddForm(true)}>
           <AddMovieCard />
         </button>
         {allMovies.map((movie) => (
@@ -88,13 +77,16 @@ const MyMovie = () => {
           <UpdateForm
             selectedSingleMovie={selectedSingleMovie}
             setIsUpdateForm={setIsUpdateForm}
+            updateMovieData={handleUpdateMovieData} 
           />
         )}
       </div>
       <div>
         {isAddForm && (
           <AddForm
-          setIsAddForm={setIsAddForm}
+            setIsAddForm={setIsAddForm}
+            addMovieData={handleAddMovieData} 
+
           />
         )}
       </div>

@@ -6,13 +6,13 @@ const createMovie = async (req, res) => {
   const {id,title,overview,backdropPath,posterPath,genres} = req.body;
 
   try {
-    const existingMovie = await Movie.findOne({ id: id });
+    // const existingMovie = await Movie.findOne({ id: id });
 
-    if (existingMovie) {
-      return res
-        .status(400)
-        .json({ error: "Movie with the same id already exists." });
-    }
+    // if (existingMovie) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: "Movie with the same id already exists." });
+    // }
 
     const movie = await Movie.create({
       id: id,
@@ -21,6 +21,9 @@ const createMovie = async (req, res) => {
       backdropPath: backdropPath,
       posterPath: posterPath,
       genres: genres,
+      user:req.user._id,
+
+
     });
 
     res.json({ Movie: movie });

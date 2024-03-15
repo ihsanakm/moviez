@@ -32,7 +32,7 @@ const Detail = () => {
         backdropPath: item.backdrop_path,
         posterPath: item.poster_path,
         genres: item.genres.map(genre => genre.name),      
-      });
+      },{ withCredentials: true });
 
       console.log("Added to watchlist:", response.data);
     } catch (error) {
